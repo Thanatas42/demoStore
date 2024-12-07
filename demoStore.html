@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Интернет-магазин</title>
+  <style>
+    /* Основной стиль */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    /* Навигационное меню */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Стили для корзины */
+    .cart-info {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .cart-info span {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+
+    /* Стили для фильтра */
+    .filter {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 20px;
+    }
+
+    .filter select {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Стили для товаров */
+    .store-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 20px;
+    }
+
+    .product {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product h3 {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .product p {
+      font-size: 1em;
+      color: #555;
+    }
+
+    .product button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .product button:hover {
+      background-color: #45a049;
+    }
+
+    .product button.added {
+      animation: bounce 0.5s ease-in-out;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: scale(1);
+      }
+
+      20% {
+        transform: scale(1.1);
+      }
+
+      40% {
+        transform: scale(1);
+      }
+    }
+
+    /* Стили для iframe */
+    iframe {
+      border: none;
+      width: 100%;
+      max-width: 800px;
+      /* Ограничиваем ширину iframe */
+      height: 500px;
+      border-radius: 8px;
+      margin-top: 40px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Навигационное меню -->
+  <div class="navbar">
+    <a href="#">Главная</a>
+    <a href="#">О нас</a>
+    <a href="#">Контакты</a>
+    <a href="#">Корзина</a>
+  </div>
+
+  <h1>Добро пожаловать в наш интернет-магазин</h1>
+
+  <!-- Фильтр товаров -->
+  <div class="filter">
+    <select id="categoryFilter">
+      <option value="">Все категории</option>
+      <option value="electronics">Электроника</option>
+      <option value="clothing">Одежда</option>
+      <option value="accessories">Аксессуары</option>
+    </select>
+
+    <select id="priceFilter">
+      <option value="">Без фильтра</option>
+      <option value="low">До 1000 руб.</option>
+      <option value="medium">1000 - 3000 руб.</option>
+      <option value="high">Свыше 3000 руб.</option>
+    </select>
+  </div>
+
+  <!-- Информация о корзине -->
+  <div class="cart-info">
+    <p>Товары в корзине: <span id="cartCount">0</span></p>
+    <p>Общая сумма: <span id="totalPrice">0 руб.</span></p>
+  </div>
+
+  <!-- Блок с товарами -->
+  <div class="store-container">
+    <div class="product" id="product1">
+      <img src="https://via.placeholder.com/250x200?text=Товар+1" alt="Товар 1">
+      <h3>Товар 1</h3>
+      <p>Цена: 1000 руб.</p>
+      <button onclick="addToCart('Товар 1', 1000, 'product1')">Добавить в корзину</button>
+    </div>
+
+    <div class="product" id="product2">
+      <img src="https://via.placeholder.com/250x200?text=Товар+2" alt="Товар 2">
+      <h3>Товар 2</h3>
+      <p>Цена: 2000 руб.</p>
+      <button onclick="addToCart('Товар 2', 2000, 'product2')">Добавить в корзину</button>
+    </div>
+
+    <div class="product" id="product3">
+      <img src="https://via.placeholder.com/250x200?text=Товар+3" alt="Товар 3">
+      <h3>Товар 3</h3>
+      <p>Цена: 3000 руб.</p>
+      <button onclick="addToCart('Товар 3', 3000, 'product3')">Добавить в корзину</button>
+    </div>
+  </div>
+
+  <!-- Встраиваем форму с внешнего сайта -->
+  <iframe id="orderForm" src="https://yashashin.ru/form/map" title="Форма заказа"></iframe>
+
+  <script>
+    let cart = [];
+    let totalPrice = 0;
+
+    // Функция добавления товара в корзину
+    function addToCart(productName, price, productId) {
+      cart.push({ product: productName, price: price });
+      totalPrice += price;
+
+      // Обновляем информацию о корзине
+      document.getElementById('cartCount').textContent = cart.length;
+      document.getElementById('totalPrice').textContent = totalPrice + ' руб.';
+
+      // Обновляем кнопку товара
+      const button = document.querySelector(`#${productId} button`);
+      button.textContent = 'Товар добавлен!';
+      button.disabled = true;
+      button.classList.add('added');
+
+      // Отправляем данные в форму
+      sendDataToForm(cart);
+    }
+
+    // Функция отправки данных в форму
+    function sendDataToForm(cart) {
+      const iframe = document.getElementById('orderForm');
+      const iframeWindow = iframe.contentWindow;
+
+      // Преобразуем корзину в JSON
+      const jsonOrder = JSON.stringify(cart);
+
+      // Отправляем данные в iframe через postMessage
+      iframeWindow.postMessage({
+        orderId: '123456',
+        orderData: jsonOrder
+      }, '*');
+    }
+
+    // Обработчик сообщений для получения данных в форме
+    window.addEventListener('message', (event) => {
+      if (event.origin !== 'https://yashashin.ru') return;
+      const data = event.data;
+      if (data.orderId && data.orderData) {
+        console.log('Получены данные заказа:', data);
+      }
+    });
+  </script>
+</body>
+
+</html>
